@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Presentable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,6 +13,7 @@ class Company extends Model
 {
     use HasFactory;
     use Presentable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
