@@ -70,19 +70,30 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $companies = Company::query()->latest()->get();
+
+        return view('employees.edit', compact('employee', 'companies'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\EmployeeRequest  $request
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->only([
+            'first_name',
+            'last_name',
+            'company_id',
+            'email',
+            'phone',
+        ]));
+
+        return redirect()->route('employees.index')
+            ->with('success', 'The employee was updated successfully');
     }
 
     /**
