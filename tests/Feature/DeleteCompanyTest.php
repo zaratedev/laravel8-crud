@@ -27,5 +27,4 @@ class DeleteCompanyTest extends TestCase
             'id' => $company->id,
         ]);
     }
-
 }
