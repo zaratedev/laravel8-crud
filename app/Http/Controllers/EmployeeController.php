@@ -16,7 +16,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::query()->latest()->simplePaginate(10);
+
+        return view('employees.index', compact('employees'));
     }
 
     /**
@@ -59,7 +61,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return view('employees.show', compact('employee'));
     }
 
     /**

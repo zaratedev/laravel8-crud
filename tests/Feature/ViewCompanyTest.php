@@ -55,5 +55,4 @@ class ViewCompanyTest extends TestCase
             ->assertSee($company->website)
             ->assertSee($company->present()->logo);
     }
-
 }
