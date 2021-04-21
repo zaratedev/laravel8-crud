@@ -15,7 +15,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::query()->latest()->simplePaginate(10);
+        $employees = Employee::query()->with('company')->latest()->simplePaginate(10);
 
         return view('employees.index', compact('employees'));
     }
