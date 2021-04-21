@@ -1,0 +1,53 @@
+name: Continous Integration for Laravel
+on: [push]
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 7.4
+      - uses: actions/checkout@v2
+      - name: Copy .env Laravel Configuration for CI
+        run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-composer-dependencies
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install Dependencies (PHP vendors)
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Create DB and schemas
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+          php artisan migrate --seed
+          php artisan config:clear
+          composer dump-autoload
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install npm dependencies
+        run: |
+          npm ci
+          npm run prod
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: php artisan test --parallel
