@@ -33,6 +33,17 @@ class Employee extends Model
      */
     public string $presenter = Presenters\EmployeePresenter::class;
 
+    /*
+    |--------------------------------------------------------------------------
+    | Eloquent Model Relationships
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Define an inverse one-to-one or many relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function company()
     {
         return $this->belongsTo(Company::class);

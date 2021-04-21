@@ -19,6 +19,16 @@ class CompanyPresenter extends Presenter
         return ucwords(mb_strtolower(trim($this->model->name)));
     }
 
+    public function email()
+    {
+        return $this->model->email ?? static::EM_DASH;
+    }
+
+    public function website()
+    {
+        return $this->model->website ?? static::EM_DASH;
+    }
+
     /**
      * Display the logo url.
      *

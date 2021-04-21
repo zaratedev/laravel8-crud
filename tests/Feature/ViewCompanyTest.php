@@ -31,7 +31,7 @@ class ViewCompanyTest extends TestCase
 
         $companies = Company::query()
             ->latest()
-            ->paginate(10);
+            ->simplePaginate(10);
 
         $companies->setPath(config('app.url').'/companies');
 
