@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Cyber Duck',
+    'title' => 'Crud',
     'title_prefix' => '',
     'title_postfix' => '',
 

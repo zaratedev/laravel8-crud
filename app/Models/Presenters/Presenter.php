@@ -49,14 +49,14 @@ abstract class Presenter
     protected function placeholder($width, $height): string
     {
         if ($height === 'auto') {
-            return "https://via.placeholder.com/{$width}?text=Cyber+Duck";
+            return "https://via.placeholder.com/{$width}?text=Laravel";
         }
 
         if ($width === 'auto') {
-            return "https://via.placeholder.com/{$height}?text=Cyber+Duck";
+            return "https://via.placeholder.com/{$height}?text=Laravel";
         }
 
-        return "https://via.placeholder.com/{$width}x{$height}?text=Cyber+Duck";
+        return "https://via.placeholder.com/{$width}x{$height}?text=Laravel";
     }
 
     /**
